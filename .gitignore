@@ -1,5 +1,9 @@
 venv
 .pytest_cache
+<<<<<<< HEAD
 .vscode
 .env
 __pycache__
+=======
+__pycache__
+>>>>>>> 5da0fe611909ef77870044de3d89be9320c3ba8a

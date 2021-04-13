@@ -1,7 +1,7 @@
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class UserCompanyModel(db.Model):
+class UserCompany(db.Model):
     __tablename__ = 'user_company'
 
     id = db.Column(db.Integer, primary_key=True)

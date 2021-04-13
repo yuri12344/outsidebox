@@ -12,4 +12,4 @@ def init_app(app: Flask):
     
     # from app.models.feedback import FeedbackModel
     from app.models.user_client_model import UserClient
-
+    from app.models.user_company_model import UserCompany

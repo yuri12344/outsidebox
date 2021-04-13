@@ -2,8 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5f81914-ac6a-4859-b7ac-03688410b307" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/flgjkdlsç" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/outside_the_box_capstone_q3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/signup_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/user_client_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/user_company_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/versions/dbe55203eda0_create_a_user_company_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/configurations/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/configurations/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/register.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/tests/test_signup_company.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/2a606826357b_criação_da_model_feedbackmodel.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +61,7 @@
       <workItem from="1618316661369" duration="54000" />
       <workItem from="1618335604994" duration="3835000" />
       <workItem from="1618343848196" duration="30000" />
-      <workItem from="1618343917369" duration="1543000" />
+      <workItem from="1618343917369" duration="3286000" />
     </task>
     <servers />
   </component>

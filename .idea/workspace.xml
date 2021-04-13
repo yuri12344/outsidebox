@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5f81914-ac6a-4859-b7ac-03688410b307" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/register.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/configurations/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/configurations/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user_client_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user_client_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/alembic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/script.py.mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/2a606826357b_criação_da_model_feedbackmodel.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +51,7 @@
       <workItem from="1618254600421" duration="610000" />
       <workItem from="1618269451652" duration="7499000" />
       <workItem from="1618316661369" duration="54000" />
-      <workItem from="1618335604994" duration="2314000" />
+      <workItem from="1618335604994" duration="3835000" />
     </task>
     <servers />
   </component>

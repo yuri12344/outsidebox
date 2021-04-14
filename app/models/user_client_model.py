@@ -9,7 +9,7 @@ class UserClient(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), nullable=False)
-    email = db.Column(db.String(25), nullable=False, unique=True)
+    email = db.Column(db.String(30), nullable=False, unique=True)
     password_hash = db.Column(db.String(25), nullable=False)
     phone = db.Column(db.String(15), nullable=False)
     adress = db.Column(db.String(25), nullable=False)
@@ -19,6 +19,7 @@ class UserClient(db.Model):
     @property
     def password(self):
         raise TypeError('A senha não pode ser acessada')
+
 
     @password.setter
     def password(self, new_password):

@@ -3,9 +3,12 @@ from os import getenv
 from app.configurations import database, migration
 # from app import views
 
+from .views.dashboard_client import bp as bp_client
 
 def create_app():
     app = Flask(__name__)
+
+    app.register_blueprint(bp_client)
 
     #Aqui nós passamos o "SQLALCHEMY_DATABASE_URI" que foi feito lá no .env
     app.config["SQLALCHEMY_DATABASE_URI"] = getenv("SQLALCHEMY_DATABASE_URI")

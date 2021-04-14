@@ -9,7 +9,7 @@ db = SQLAlchemy()
 def init_app(app: Flask):
     db.init_app(app)
     app.db = db
-    
-    # from app.models.feedback import FeedbackModel
+
+    from app.models.feedback import FeedbackModel
     from app.models.user_client_model import UserClient
     from app.models.user_company_model import UserCompany

@@ -4,6 +4,7 @@ from app.configurations import database, migration
 from app import views
 
 
+
 def create_app():
     app = Flask(__name__)
 

@@ -4,7 +4,11 @@
     <list default="true" id="b5f81914-ac6a-4859-b7ac-03688410b307" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/app/views/feedback_view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/app/models/user_client_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user_client_model.py" afterDir="false" />
+=======
       <change beforePath="$PROJECT_DIR$/app/views/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/__init__.py" afterDir="false" />
+>>>>>>> e8deb4623af1c031511754caa53ab29185c9da82
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,12 +80,18 @@
       <workItem from="1618269451652" duration="7499000" />
       <workItem from="1618316661369" duration="54000" />
       <workItem from="1618335604994" duration="3835000" />
+<<<<<<< HEAD
+      <workItem from="1618343848196" duration="30000" />
+      <workItem from="1618343917369" duration="3432000" />
+      <workItem from="1618353654082" duration="98000" />
+=======
       <workItem from="1618450487663" duration="68000" />
       <workItem from="1618450556487" duration="119000" />
       <workItem from="1618450693465" duration="166000" />
       <workItem from="1618450861409" duration="923000" />
       <workItem from="1618451811291" duration="1997000" />
       <workItem from="1618488487840" duration="1052000" />
+>>>>>>> e8deb4623af1c031511754caa53ab29185c9da82
     </task>
     <servers />
   </component>

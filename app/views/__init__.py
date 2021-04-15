@@ -7,4 +7,3 @@ def init_app(app: Flask):
     """
         Importamos e registramos corretamente nossa rota bp_service criada
     """
-   

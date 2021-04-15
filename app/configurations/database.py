@@ -1,10 +1,10 @@
-
-#Importante apenas para typehint
 from flask import Flask
+# Importante apenas para typehint
 # Importando para termos conexão com o banco de dados
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
 
 def init_app(app: Flask):
     db.init_app(app)

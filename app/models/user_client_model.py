@@ -21,7 +21,7 @@ class UserClient(db.Model):
     @password.setter
     def password(self, new_password):
         new_password_hash = generate_password_hash(new_password)
-        self.password_hash = new_password_hashm
+        self.password_hash = new_password_hash
 
     def check_password(self, password_to_compare):
         return check_password_hash(self.password_hash, password_to_compare)

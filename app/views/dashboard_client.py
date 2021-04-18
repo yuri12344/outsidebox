@@ -27,11 +27,13 @@ def client():
         city= data["city"],
         state= data["state"]
     )
+
+
     try:
         session.add(client)  # Adicionando essa model a o nossa tabela 'bands'
         session.commit()  # Dando commit nas inserções feita na nossa tabela
     except:
-        return {"status":"Email já cadastrado"}, HTTPStatus.UNPROCESSABLE_ENTITY
+        return {"status":"Dados invalidos"}, HTTPStatus.UNPROCESSABLE_ENTITY
 
     return {"id": client.id,
             "name": client.name,

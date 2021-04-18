@@ -1,20 +1,7 @@
 import re
 
 def validate_data(client):
-
-    # return client["name"] is None or client["name"] is ""
-    if client["name"] == None or client["name"] == "":
-        return False
-
-    if client["phone"] == None or client["phone"] == "":
-        return False
-    if client["adress"] == None or client["adress"] == "":
-        return False
-    if client["city"] == None or client["city"] == "":
-        return False
-    if client["state"] == None or client["state"] == "":
-        return False
-    return True
+    return not [key for key in client if client[key] == "" or client[key] == None]
 
 
 def validate_email(email):

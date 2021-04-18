@@ -14,6 +14,7 @@ class UserCompany(db.Model):
     state = db.Column(db.String(15), nullable=False)
     cpf_cnpj = db.Column(db.String(25), nullable=False)
     schedule = db.Column(db.String(25), nullable=False)
+    description = db.Column(db.String(100), nullable=False)
     
     @property
     def password(self):

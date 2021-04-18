@@ -10,3 +10,6 @@ def init_app(app: Flask):
 
     from app.views.feedback_view import bp_feedback
     app.register_blueprint(bp_feedback)
+
+    from app.views.signup_company_view import bp_signup_comapany
+    app.register_blueprint(bp_signup_comapany)

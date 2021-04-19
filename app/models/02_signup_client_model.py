@@ -2,7 +2,8 @@ from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
-class UserClient(db.Model):
+
+class ClientModel(db.Model):
     __tablename__ = "user_client"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +19,6 @@ class UserClient(db.Model):
     def password(self):
         raise TypeError('A senha não pode ser acessada')
 
-
     @password.setter
     def password(self, new_password):
         new_password_hash = generate_password_hash(new_password)
@@ -26,6 +26,3 @@ class UserClient(db.Model):
 
     def check_password(self, password_to_compare):
         return check_password_hash(self.password_hash, password_to_compare)
-
-
-

@@ -1,7 +1,6 @@
-from flask import Blueprint, request,  current_app
+from flask import Blueprint, request, current_app
 from http import HTTPStatus
-from app.models.user_client_model import UserClient
-
+from app.models.signup_client_model import ClientModel
 
 bp_client = Blueprint('client_route', __name__)
 
@@ -10,7 +9,7 @@ bp_client = Blueprint('client_route', __name__)
 def client():
     session = current_app.db.session
     data = request.get_json()
-    client = UserClient(  # criação da model
+    client = ClientModel(  # criação da model
         name=data["name"],
         email=data["email"],
         password_hash=data["password_hash"],
@@ -25,13 +24,12 @@ def client():
     except:
         return {"status": "Email já cadastrado"}, HTTPStatus.UNPROCESSABLE_ENTITY
 
-    return {
-        "id": client.id,
-        "name": client.name,
-        "email": client.email,
-        "password": client.password_hash,
-        "phone": client.phone,
-        "adress": client.adress,
-        "city": client.city,
-        "state": client.state
-    }
+    return {"id": client.id,
+            "name": client.name,
+            "email": client.email,
+            "password": client.password_hash,
+            "phone": client.phone,
+            "adress": client.adress,
+            "city": client.city,
+            "state": client.state
+            }

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, current_app
 
 from http import HTTPStatus
-from app.models.user_company_model import UserCompany
+from app.models.signup_company_model import CompanyModel
 from app.services.signup import SignUp
 
 bp_signup_comapany = Blueprint(
@@ -15,7 +15,7 @@ def signup_comp():
     print(checked_data.__dict__)
 
     session = current_app.db.session
-    #data_to_write_in_database = UserCompany(feedback=data["feedback"])
+    #data_to_write_in_database = CompanyModel(feedback=data["feedback"])
     # session.add(data_to_write_in_database)
     # session.commit()
 

@@ -11,6 +11,9 @@ def init_app(app: Flask):
     app.db = db
 
     from app.models.feedback_model import FeedbackModel
-    from app.models.user_client_model import UserClient
-    from app.models.user_company_model import UserCompany
-    from app.models.service_model import ServiceModel
+    from app.models.signup_client_model import ClientModel
+    from app.models.signup_company_model import CompanyModel
+    from app.models.service_resquest_catolog_model import ServiceRequestCatologModel
+    from app.models.service_specific_model import ServiceSpecificModel
+    from app.models.service_catolog_model import ServiceCatologModel
+

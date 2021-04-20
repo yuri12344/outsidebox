@@ -12,11 +12,11 @@ def client():
     data = request.get_json()
 
     if validate_data(data) == False:
-        return "Obrigatório preencher todos os campos", 400
+        return "Mandatory to fill in all fields", 400
     if validate_email(data['email']) == False:
-        return "email invalido", 400
+        return "Invalid email", 400
     if validate_password(data['password_hash']) == False:
-        return "Senha deve conter: minimo 6 digitos, 1 letra minuscula, 1 letra maiuscula, 1 numero, 1 caracter especial", 400
+        return "Password must contain: minimum 6 digits, 1 lowercase letter, 1 uppercase letter, 1 number, 1 special character", 400
 
     client = UserClient(  #criação da model
         name=data["name"],
@@ -33,14 +33,15 @@ def client():
         session.add(client)  # Adicionando essa model a o nossa tabela 'bands'
         session.commit()  # Dando commit nas inserções feita na nossa tabela
     except:
-        return {"status":"Dados invalidos"}, HTTPStatus.UNPROCESSABLE_ENTITY
+        return {"status":"Invalid data"}, HTTPStatus.UNPROCESSABLE_ENTITY
 
-    return {"id": client.id,
-            "name": client.name,
-            "email": client.email,
-            "password": client.password_hash,
-            "phone" : client.phone,
-            "adress": client.adress,
-            "city": client.city,
-            "state": client.state
-            }
+    return {"User created with sucess"}
+    # return {"id": client.id,
+    #         "name": client.name,
+    #         "email": client.email,
+    #         "password": client.password_hash,
+    #         "phone" : client.phone,
+    #         "adress": client.adress,
+    #         "city": client.city,
+    #         "state": client.state
+    #         }

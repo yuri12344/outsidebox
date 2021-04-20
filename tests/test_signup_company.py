@@ -1,4 +1,5 @@
 import requests
+import json
 
 
 def test_signup_company():
@@ -27,11 +28,11 @@ def test_signup_company():
             "state": "Parana",
             "cpf/cnpj": "860.402.201/12",
             "schedule": "seg-seg 8 as 18",
-            "description": "Fazemos manutenção de carro e moto,    completa e básica"
+            "description": "Fazemos manutenção de carro e moto, completa e básica"
         }
     }
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    result = requests.post(
+        'http://127.0.0.1:5000/signup_company/', data=json.dumps(given), headers=headers)
 
-    result = requests.post('http://127.0.0.1:5000/signup_company/',
-                           auth=('user', 'pass'), data=given)
-
-    assert result == expected
+    assert result.json() == expected

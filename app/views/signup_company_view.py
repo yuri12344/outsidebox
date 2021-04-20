@@ -15,7 +15,7 @@ def signup_comp():
     print(checked_data.__dict__)
 
     session = current_app.db.session
-    #data_to_write_in_database = CompanyModel(feedback=data["feedback"])
+    # data_to_write_in_database = CompanyModel(feedback=data["feedback"])
     # session.add(data_to_write_in_database)
     # session.commit()
 

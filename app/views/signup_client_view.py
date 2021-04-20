@@ -4,9 +4,8 @@ from http import HTTPStatus
 from app.models.user_client_model import UserClient
 from ..services.dashboard_client_services import validate_data,validate_email,validate_password
 
-bp_client= Blueprint('client_route', __name__)
 
-@bp_client.route('/client',methods=["POST"])
+@bp_client.route('/client', methods=["POST"])
 def client():
     session = current_app.db.session
     data = request.get_json()
@@ -24,8 +23,8 @@ def client():
         password_hash=data["password_hash"],
         phone=data["phone"],
         adress=data["adress"],
-        city= data["city"],
-        state= data["state"]
+        city=data["city"],
+        state=data["state"]
     )
 
 

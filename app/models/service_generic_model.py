@@ -1,7 +1,7 @@
 from . import db
 
 
-class ServiceModel(db.Model):
+class ServiceGenericModel(db.Model):
     __tablename__ = 'services'
 
     id = db.Column(db.Integer, primary_key=True)

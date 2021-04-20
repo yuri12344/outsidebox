@@ -16,7 +16,7 @@ def client():
     if validate_email(data['email']) == False:
         return "email invalido", 400
     if validate_password(data['password_hash']) == False:
-        return "Senha invalida", 400
+        return "Senha deve conter: minimo 6 digitos, 1 letra minuscula, 1 letra maiuscula, 1 numero, 1 caracter especial", 400
 
     client = UserClient(  #criação da model
         name=data["name"],

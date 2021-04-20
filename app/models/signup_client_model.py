@@ -8,7 +8,7 @@ class ClientModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(30), nullable=False, unique=True)
-    password_hash = db.Column(db.String(25), nullable=False)
+    password = db.Column(db.String(25), nullable=False)
     phone = db.Column(db.String(15), nullable=False)
     adress = db.Column(db.String(25), nullable=False)
     city = db.Column(db.String(15), nullable=False)
@@ -20,8 +20,8 @@ class ClientModel(db.Model):
 
     @password.setter
     def password(self, new_password):
-        new_password_hash = generate_password_hash(new_password)
-        self.password_hash = new_password_hash
+        new_password = generate_password(new_password)
+        self.password = new_password
 
     def check_password(self, password_to_compare):
-        return check_password_hash(self.password_hash, password_to_compare)
+        return check_password(self.password, password_to_compare)

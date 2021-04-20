@@ -26,7 +26,7 @@ data_to_register = {
     "state": "Parana",
     "cpf/cnpj": "860.402.201/12",
     "schedule": "seg-seg 8 as 18",
-    "description": "Fazemos manutenção de carro e moto, completa e básica",
+    "description": "Fazemos manutenção de carro e moto, completa e básica"
 }
 
 expected_return = {
@@ -43,9 +43,8 @@ expected_return = {
 }
 # END SIGNUP COMPANY
 
-
 # 02 SERVICES CATALOG
-# url = /services_catalog/create/<id_company >
+# url = /services_catalog/create/<id_company>
 # Método POST
 # Vai receber o ID da empresa na URL
 # Se id_company está logado
@@ -217,6 +216,8 @@ expected = {
 # Método UPDATE
 # /update_service/1/1
 # Se o id_company estiver logado, e id_service existir
+
+# Buscar id_service na tabela de catalogo e de serviço específico
 json_to_update_services = {
     "name_of_service": "Name of service",
     "client_name": "Client name",
@@ -405,7 +406,7 @@ expected = {
 
 # Se na busca do e-mail ta tabela company bater
 expected = {
-    "redirect_url": "company_dashboard/<id_user>",
+    "redirect_url": "company_dashboard/<id_company>",
     "token": "asdaqwehuqwhuasaudh123"
 }
 
@@ -432,6 +433,7 @@ expected = {
     "city": "São José dos Pinhais",
     "state": "Paraná",
     "services_done": [{}]
+    # Buscar no banco de dados serviços feitos por este ID
 }
 # Caso o usuário não esteja logado ou ID não existe
 expected = {

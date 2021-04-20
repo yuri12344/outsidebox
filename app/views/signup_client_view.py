@@ -1,12 +1,15 @@
 
 from flask import Blueprint, request,  current_app
 from http import HTTPStatus
-from app.models.user_client_model import UserClient
-from ..services.dashboard_client_services import validate_data,validate_email,validate_password
+from app.models.signup_client_model import ClientModel
+from ..services.signup_client_services import validate_data, validate_email,validate_password
+
+bp_client = Blueprint("client_route", __name__)
 
 
 @bp_client.route('/client', methods=["POST"])
 def client():
+    print ("teste")
     session = current_app.db.session
     data = request.get_json()
 
@@ -17,7 +20,7 @@ def client():
     if validate_password(data['password_hash']) == False:
         return "Password must contain: minimum 6 digits, 1 lowercase letter, 1 uppercase letter, 1 number, 1 special character", 400
 
-    client = UserClient(  #criação da model
+    client = ClientModel(  #criação da modelflask 
         name=data["name"],
         email=data["email"],
         password_hash=data["password_hash"],
@@ -34,7 +37,11 @@ def client():
     except:
         return {"status":"Invalid data"}, HTTPStatus.UNPROCESSABLE_ENTITY
 
-    return {"User created with sucess"}
+    return {"status":"User created with sucess"}
+
+
+
+
     # return {"id": client.id,
     #         "name": client.name,
     #         "email": client.email,

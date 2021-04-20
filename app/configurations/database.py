@@ -13,7 +13,7 @@ def init_app(app: Flask):
     from app.models.feedback_model import FeedbackModel
     from app.models.signup_client_model import ClientModel
     from app.models.signup_company_model import CompanyModel
-    from app.models.service_resquest_catolog_model import ServiceRequestCatologModel
+    from app.models.service_request_catalog_model import ServiceRequestCatalogModel
     from app.models.service_specific_model import ServiceSpecificModel
-    from app.models.service_catolog_model import ServiceCatologModel
+    from app.models.service_catalog_model import ServiceCatalogModel
 

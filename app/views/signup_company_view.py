@@ -37,5 +37,6 @@ def signup_comp():
         try:
             session.add(company)
             session.commit()
+            return {"status": "User created"}
         except:
-            return {"status": "Invalid data"}, HTTPStatus.UNPROCESSABLE_ENTITY
+            return {"status": "Usuário com este e-mail já existe"}, HTTPStatus.UNPROCESSABLE_ENTITY

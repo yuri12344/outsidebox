@@ -1,8 +1,9 @@
 
+from werkzeug.security import generate_password_hash
 from flask import Blueprint, request,  current_app
 from http import HTTPStatus
 from app.models.signup_client_model import ClientModel
-    from ..services.signup_client_services import validate_data, validate_email,validate_password
+from ..services.signup_client_services import validate_data, validate_email,validate_password
 
 bp_client = Blueprint("client_route", __name__)
 
@@ -20,10 +21,11 @@ def client():
     if validate_password(data['password_hash']) == False:
         return "Password must contain: minimum 6 digits, 1 lowercase letter, 1 uppercase letter, 1 number, 1 special character", 400
 
+    hash_password = generate_password_hash(data['password'], method="sha256")
     client = ClientModel(  #criação da modelflask 
         name=data["name"],
         email=data["email"],
-        password_hash=data["password_hash"],
+        password=hash_password,
         phone=data["phone"],
         adress=data["adress"],
         city=data["city"],

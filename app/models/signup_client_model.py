@@ -14,14 +14,4 @@ class ClientModel(db.Model):
     city = db.Column(db.String(15), nullable=False)
     state = db.Column(db.String(15), nullable=False)
 
-    @property
-    def password(self):
-        raise TypeError('A senha não pode ser acessada')
 
-    @password.setter
-    def password(self, new_password):
-        new_password = generate_password(new_password)
-        self.password = new_password
-
-    def check_password(self, password_to_compare):
-        return check_password(self.password, password_to_compare)

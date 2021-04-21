@@ -28,7 +28,7 @@ bp_protected = Blueprint('/protected', __name__, url_prefix='/protected')
 bp_login = Blueprint('/login', __name__, url_prefix='/login')
 
 
-@bp_login.route('/')
+@bp_login.route('/', methods=['POST'])
 def login():
     auth = request.authorization
 

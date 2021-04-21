@@ -13,6 +13,8 @@ def init_app(app: Flask):
     app.register_blueprint(bp_service_catalog)
     from app.views.signup_company_view import bp_signup_company
     app.register_blueprint(bp_signup_company)
+    from app.views.service_specific_view import bp_service_specific
+    app.register_blueprint(bp_service_specific)
 
     # from app.views.login_view import bp_login, bp_protected, bp_unprotected
     # app.register_blueprint(bp_login)

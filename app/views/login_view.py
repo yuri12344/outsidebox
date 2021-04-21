@@ -1,4 +1,4 @@
-from flask import Blueprint, json, jsonify, request, make_response, current_app
+from flask import Blueprint, jsonify, request, make_response, current_app
 import jwt
 import datetime
 from functools import wraps
@@ -13,7 +13,8 @@ def token_required(f):
             return jsonify({'message': 'Token is missing!'}), 403
 
         try:
-            data = jwt.decode(token, 'chavesecreta', algorithms=["HS256"])
+            data = jwt.decode(token, current_app.secret_key,
+                              algorithms=["HS256"])
         except:
             return jsonify({'message': 'Token is invalid!'}), 403
 
@@ -34,19 +35,14 @@ def login():
 
     if auth and auth.password == 'secret':
         token = jwt.encode({'user': auth.username, 'exp': datetime.datetime.utcnow(
-        ) + datetime.timedelta(minutes=10)}, "chavesecreta", algorithm="HS256")
+        ) + datetime.timedelta(minutes=10)}, current_app.secret_key, algorithm="HS256")
 
         return jsonify({'token': token})
 
     return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
 
-@bp_unprotected.route('/')
-def unprotected():
-    return jsonify({'message': 'Anyone can view this!'})
-
-
-@bp_protected.route('/')
+@bp_protected.route('/protected')
 @token_required
 def protected():
     return jsonify({'message': 'This is only available for people with valid tokens.'})

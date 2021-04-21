@@ -11,7 +11,7 @@ def service():
     session = current_app.db.session
     data = request.get_json()
     service = ServiceGenericModel(
-        service_price=data["service_price"], service_description=data["service_description"])
+    service_price=data["service_price"], service_description=data["service_description"])
     session.add(service)
     session.commit()
 

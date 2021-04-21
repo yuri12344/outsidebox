@@ -2,7 +2,7 @@ from . import db
 
 
 class ServiceSpecificModel(db.Model):
-    __tablename__ = 'service_catolog'
+    __tablename__ = 'services_specific'
     id = db.Column(db.Integer, primary_key=True)
     name_of_service = db.Column(db.String(55), nullable=False)
     price = db.Column(db.String(20), nullable=True)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Blueprint, current_app, request
 
 from app.models.service_specific_model import ServiceSpecificModel
@@ -45,3 +46,20 @@ def service_catalog(id_company):
         "responsible": service_specific.responsible,
         "id_company": service_specific.id_company
     }
+=======
+from flask import Blueprint, request, jsonify
+
+bp_services_specific = Blueprint(
+    'bp_services_specific', __name__, url_prefix='/services_specific/create')
+
+
+@bp_services_specific.route('/<id_company>', methods=['POST'])
+def specific_service(id_company=0):
+
+    return {"message": "Rota services specific"}
+
+
+@bp_services_specific.route('/', methods=['POST'])
+def only_slash():
+    return jsonify({'message': 'you need use url => services_specific/create/<id_company> '})
+>>>>>>> 522b99973e70db515a38d64fd1998e67a4666097

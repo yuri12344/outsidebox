@@ -1,18 +1,15 @@
-from flask import Blueprint, request, current_app
+from flask import Blueprint, request, jsonify
 
-from http import HTTPStatus
-from app.models.service_generic_model import ServiceGenericModel
-
-bp_service = Blueprint('bp_service', __name__, url_prefix='/service')
+bp_catalog_service_request = Blueprint(
+    'bp_catalog_service_request', __name__, url_prefix='/catalog_service_request')
 
 
-@bp_service.route('/', methods=['POST'])
-def service():
-    session = current_app.db.session
-    data = request.get_json()
-    service = ServiceGenericModel(
-    service_price=data["service_price"], service_description=data["service_description"])
-    session.add(service)
-    session.commit()
+@bp_catalog_service_request.route('/<id_company>', methods=['POST'])
+def service_catalog(id_company=0):
 
-    return {"id": service.id, "service_price": service.service_price}, HTTPStatus.CREATED
+    return {"message": "Rota catalog service request"}
+
+
+@bp_catalog_service_request.route('/', methods=['POST'])
+def only_slash():
+    return jsonify({'message': 'you need use url => catalog_service_request/<id_company>/ '})

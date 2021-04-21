@@ -9,7 +9,7 @@ bp_client = Blueprint("client_route", __name__)
 
 @bp_client.route('/client', methods=["POST"])
 def client():
-    print ("teste")
+
     session = current_app.db.session
     data = request.get_json()
 
@@ -30,14 +30,13 @@ def client():
         state=data["state"]
     )
 
-
     try:
         session.add(client)  # Adicionando essa model a o nossa tabela 'bands'
         session.commit()  # Dando commit nas inserções feita na nossa tabela
     except:
         return {"status":"Invalid data"}, HTTPStatus.UNPROCESSABLE_ENTITY
 
-    return {"status":"User created with sucess"}
+    return {"sucess": "User created with sucess"}
 
 
 

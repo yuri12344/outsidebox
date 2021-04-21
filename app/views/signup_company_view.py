@@ -1,5 +1,7 @@
 from flask import Blueprint, request, current_app
-from werkzeug.security import generate_password_hash
+import hashlib
+import binascii
+import os
 
 from http import HTTPStatus
 from app.models.signup_company_model import CompanyModel
@@ -7,6 +9,15 @@ from app.services.signup_client_services import SignUp
 
 bp_signup_company = Blueprint(
     'bp_signup_company', __name__, url_prefix='/signup_company')
+
+
+def hash_password(password):
+    """Hash a password for storing."""
+    salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
+    pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
+                                  salt, 100000)
+    pwdhash = binascii.hexlify(pwdhash)
+    return (salt + pwdhash).decode('ascii')
 
 
 @bp_signup_company.route('/', methods=['POST', 'GET'])
@@ -22,13 +33,12 @@ def signup_comp():
     if check_json_data['can_register'] == True:
         user_data = check_json_data['try_register']
 
-        hashed_password = generate_password_hash(
-            user_data['password'], method='sha256')
+        hashed_password = hash_password(user_data['password'])
 
         company = CompanyModel(
             nome=user_data["name"],
             email=user_data["email"],
-            password=hashed_password,
+            password=user_data['password'],
             phone=user_data["phone"],
             address=user_data["address"],
             city=user_data["city"],

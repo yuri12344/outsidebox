@@ -1,48 +1,46 @@
 from flask import Blueprint, jsonify, request, make_response, current_app
-import jwt
-import datetime
+from flask_sqlalchemy import SQLAlchemy
+from app.models.signup_company_model import CompanyModel
+from app.models.signup_client_model import ClientModel
 from functools import wraps
 
 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
-
-        if not token:
-            return jsonify({'message': 'Token is missing!'}), 403
-
-        try:
-            data = jwt.decode(token, current_app.secret_key,
-                              algorithms=["HS256"])
-        except:
-            return jsonify({'message': 'Token is invalid!'}), 403
-
+        token = current_app.secret_key[1]['token']
+        if token == "vazio":
+            return jsonify({'message': 'Faça o login'}), 403
         return f(*args, **kwargs)
-
     return decorated
 
 
-bp_unprotected = Blueprint('/unprotected', __name__,
-                           url_prefix='/unprotected')
-bp_protected = Blueprint('/protected', __name__, url_prefix='/protected')
 bp_login = Blueprint('/login', __name__, url_prefix='/login')
 
 
 @bp_login.route('/', methods=['POST'])
 def login():
-    auth = request.authorization
+    auth = request.get_json()
 
-    if auth and auth.password == 'secret':
-        token = jwt.encode({'user': auth.username, 'exp': datetime.datetime.utcnow(
-        ) + datetime.timedelta(minutes=10)}, current_app.secret_key, algorithm="HS256")
+    company = CompanyModel.query.filter_by(email=auth['email']).first()
+    client = ClientModel.query.filter_by(email=auth['email']).first()
 
-        return jsonify({'token': token})
+    if len(auth['email']) == 0 or len(auth['password']) == 0:
+        return make_response('Preencha todos os dados', 401)
 
-    return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+    if not company and not client:
+        return make_response('Não existe nenhum usuário com este e-mail', 401)
 
+    if company:
+        if company.password == auth['password']:
+            current_app.secret_key[1]['token'] = "logado"
+            return jsonify({'message': f'Usuário {company.nome} logado com sucesso'})
+        return jsonify({'message': 'senha errada ou email errado'})
 
-@bp_protected.route('/protected')
-@token_required
-def protected():
-    return jsonify({'message': 'This is only available for people with valid tokens.'})
+    if client:
+        if company.password == auth['password']:
+            current_app.secret_key[1]['token'] = "logado"
+            return jsonify({'message': f'Usuário {client.name} logado com sucesso'})
+        return jsonify({'message': 'senha errada ou email errado'})
+
+    return make_response('Could not verify!', 401)

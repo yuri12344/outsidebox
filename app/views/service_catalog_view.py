@@ -1,12 +1,15 @@
+from app.views.login_view import token_required
 from flask import Blueprint, request, current_app
 from app.services.validated_service_catalog import ValidatedServiceCatalog
 from http import HTTPStatus
 from app.models.service_catalog_model import ServiceCatalogModel
 
-bp_service_catalog = Blueprint('bp_service_catalog', __name__, url_prefix='/service_catalog')
+bp_service_catalog = Blueprint(
+    'bp_service_catalog', __name__, url_prefix='/service_catalog')
 
 
 @bp_service_catalog.route('/create/<int:id_company>', methods=['POST'])
+@token_required
 def service_catalog(id_company):
     session = current_app.db.session
     data = request.get_json()

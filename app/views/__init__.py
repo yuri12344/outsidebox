@@ -27,8 +27,8 @@ def init_app(app: Flask):
     app.register_blueprint(bp_update_service)
 
     # Rota 07 FEEDBACK
-    from app.views.feedback_view import bp_feedback
-    app.register_blueprint(bp_feedback)
+    #from app.views.feedback_view import bp_feedback
+    # app.register_blueprint(bp_feedback)
 
     # Rota 08 DASHBOARD COMPANY
     from app.views.dashboard_company_view import dashboard_company

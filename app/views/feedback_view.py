@@ -12,10 +12,10 @@ def service(id_company):
     session = current_app.db.session
     data = request.get_json()
 
-    feedback = FeedbackModel(feedback=data["feedback"], id_company=id_company)
+    feedback = FeedbackModel(feedback=data["feedback"])
     # feedback = FeedbackModel(feedback=data["feedback"], id_company=id_company)
     session.add(feedback)
     session.commit()
 
-    return {"feedback": feedback.feedback, "id_company": feedback.id_company}, HTTPStatus.CREATED
+    return {"feedback": feedback.feedback, "id_company": id_company}, HTTPStatus.CREATED
     # return {"feedback": feedback.feedback, "id_company": feedback.id_company}, HTTPStatus.CREATED

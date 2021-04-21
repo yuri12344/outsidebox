@@ -9,13 +9,6 @@ def init_app(app: Flask):
     # Rota 02 SERVICES CATALOG
     from app.views.service_catalog_view import bp_service_catalog
     app.register_blueprint(bp_service_catalog)
-<<<<<<< HEAD
-    from app.views.signup_company_view import bp_signup_company
-    app.register_blueprint(bp_signup_company)
-    from app.views.service_specific_view import bp_service_specific
-    app.register_blueprint(bp_service_specific)
-=======
->>>>>>> 522b99973e70db515a38d64fd1998e67a4666097
 
     # Rota 03 SERVICE REQUEST FROM CATALOG
     from app.views.service_request_catalog_model import bp_catalog_service_request

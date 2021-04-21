@@ -1,20 +1,17 @@
-<<<<<<< HEAD
-from flask import Blueprint, current_app, request
+from flask import Blueprint, request, jsonify
 
-from app.models.service_specific_model import ServiceSpecificModel
-
-bp_service_specific = Blueprint('bp_service_specific', __name__, url_prefix='/service_specific')
+bp_services_specific = Blueprint(
+    'bp_services_specific', __name__, url_prefix='/services_specific/create')
 
 
-@bp_service_specific.route('/create/<int:id_company>', methods=['POST'])
-def service_catalog(id_company):
+@bp_services_specific.route('/<id_company>', methods=['POST'])
+def specific_service(id_company=0):
     session = current_app.db.session
     data = request.get_json()
 
     def str_to_bool(data):
         return data.lower() in ("False", "True")
 
-    aproved_boolean = Boolean()
     service_specific = ServiceSpecificModel(
         name_of_service=data["name_of_service"],
         price=data["price"],
@@ -46,20 +43,9 @@ def service_catalog(id_company):
         "responsible": service_specific.responsible,
         "id_company": service_specific.id_company
     }
-=======
-from flask import Blueprint, request, jsonify
-
-bp_services_specific = Blueprint(
-    'bp_services_specific', __name__, url_prefix='/services_specific/create')
-
-
-@bp_services_specific.route('/<id_company>', methods=['POST'])
-def specific_service(id_company=0):
-
-    return {"message": "Rota services specific"}
 
 
 @bp_services_specific.route('/', methods=['POST'])
 def only_slash():
     return jsonify({'message': 'you need use url => services_specific/create/<id_company> '})
->>>>>>> 522b99973e70db515a38d64fd1998e67a4666097
+

@@ -1,8 +1,8 @@
-"""empty message
+"""create models
 
-Revision ID: faffb29f2af0
+Revision ID: a949dd4bbf82
 Revises: 
-Create Date: 2021-04-20 17:43:40.558248
+Create Date: 2021-04-21 11:40:41.520588
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'faffb29f2af0'
+revision = 'a949dd4bbf82'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,18 +32,6 @@ def upgrade():
     sa.Column('description', sa.String(length=100), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
-    )
-    op.create_table('service_request_catalog',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('client_name', sa.String(length=55), nullable=False),
-    sa.Column('id_client', sa.Integer(), nullable=True),
-    sa.Column('date_time', sa.String(length=25), nullable=False),
-    sa.Column('informations', sa.String(length=255), nullable=True),
-    sa.Column('feedback_url', sa.String(length=55), nullable=False),
-    sa.Column('aproved', sa.String(length=55), nullable=False),
-    sa.Column('responsible', sa.String(length=55), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('aproved')
     )
     op.create_table('user_client',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -98,6 +86,5 @@ def downgrade():
     op.drop_table('service_catalog')
     op.drop_table('feedbacks')
     op.drop_table('user_client')
-    op.drop_table('service_request_catalog')
     op.drop_table('company')
     # ### end Alembic commands ###

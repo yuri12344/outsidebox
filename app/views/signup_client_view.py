@@ -2,7 +2,7 @@
 from flask import Blueprint, request,  current_app
 from http import HTTPStatus
 from app.models.signup_client_model import ClientModel
-from ..services.signup_client_services import validate_data, validate_email,validate_password
+    from ..services.signup_client_services import validate_data, validate_email,validate_password
 
 bp_client = Blueprint("client_route", __name__)
 

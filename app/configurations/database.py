@@ -16,4 +16,3 @@ def init_app(app: Flask):
     # from app.models.service_request_catalog_model import ServiceRequestCatalogModel
     from app.models.service_specific_model import ServiceSpecificModel
     from app.models.service_catalog_model import ServiceCatalogModel
-

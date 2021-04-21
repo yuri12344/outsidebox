@@ -1,9 +1,8 @@
-
-from werkzeug.security import generate_password_hash
 from flask import Blueprint, request,  current_app
+from werkzeug.security import generate_password_hash
 from http import HTTPStatus
 from app.models.signup_client_model import ClientModel
-from ..services.signup_client_services import validate_data, validate_email,validate_password
+from app.services.signup_client_services import SignupClient
 
 bp_client = Blueprint("client_route", __name__)
 
@@ -14,41 +13,30 @@ def client():
     session = current_app.db.session
     data = request.get_json()
 
-    if validate_data(data) == False:
-        return "Mandatory to fill in all fields", 400
-    if validate_email(data['email']) == False:
-        return "Invalid email", 400
-    if validate_password(data['password_hash']) == False:
-        return "Password must contain: minimum 6 digits, 1 lowercase letter, 1 uppercase letter, 1 number, 1 special character", 400
+    validate_user = SignupClient(data)
+    validate_user = validate_user.__dict__
 
-    hash_password = generate_password_hash(data['password'], method="sha256")
-    client = ClientModel(  #criação da modelflask 
-        name=data["name"],
-        email=data["email"],
-        password=hash_password,
-        phone=data["phone"],
-        adress=data["adress"],
-        city=data["city"],
-        state=data["state"]
-    )
+    if validate_user['can_register'] == False:
+        return validate_user
 
-    try:
-        session.add(client)  # Adicionando essa model a o nossa tabela 'bands'
-        session.commit()  # Dando commit nas inserções feita na nossa tabela
-    except:
-        return {"status":"Invalid data"}, HTTPStatus.UNPROCESSABLE_ENTITY
+    if validate_user['can_register'] == True:
+        user_data = validate_user['try_register']
+        hash_password = generate_password_hash(
+            user_data['password'], method="sha256")
+        client = ClientModel(  # criação da modelflask
+            name=user_data["name"],
+            email=user_data["email"],
+            password=hash_password,
+            phone=user_data["phone"],
+            address=user_data["address"],
+            city=user_data["city"],
+            state=user_data["state"]
+        )
 
-    return {"sucess": "User created with sucess"}
-
-
-
-
-    # return {"id": client.id,
-    #         "name": client.name,
-    #         "email": client.email,
-    #         "password": client.password_hash,
-    #         "phone" : client.phone,
-    #         "adress": client.adress,
-    #         "city": client.city,
-    #         "state": client.state
-    #         }
+        try:
+            # Adicionando essa model a o nossa tabela 'bands'
+            session.add(client)
+            session.commit()  # Dando commit nas inserções feita na nossa tabela
+            return {"sucess": "User created with sucess"}
+        except:
+            return {"status": "Usuario com este e-mail ja existe"}, HTTPStatus.UNPROCESSABLE_ENTITY

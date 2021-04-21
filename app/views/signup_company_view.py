@@ -5,11 +5,11 @@ from http import HTTPStatus
 from app.models.signup_company_model import CompanyModel
 from app.services.signup_client_services import SignUp
 
-bp_signup_comapany = Blueprint(
-    'bp_signup_comapany', __name__, url_prefix='/signup_company')
+bp_signup_company = Blueprint(
+    'bp_signup_company', __name__, url_prefix='/signup_company')
 
 
-@bp_signup_comapany.route('/', methods=['POST', 'GET'])
+@bp_signup_company.route('/', methods=['POST', 'GET'])
 def signup_comp():
     data = request.get_json()
     session = current_app.db.session
@@ -21,14 +21,16 @@ def signup_comp():
 
     if check_json_data['can_register'] == True:
         user_data = check_json_data['try_register']
+
         hashed_password = generate_password_hash(
             user_data['password'], method='sha256')
+
         company = CompanyModel(
             nome=user_data["name"],
             email=user_data["email"],
             password=hashed_password,
             phone=user_data["phone"],
-            adress=user_data["address"],
+            address=user_data["address"],
             city=user_data["city"],
             state=user_data["state"],
             cpf_cnpj=user_data["cpf/cnpj"],
@@ -41,4 +43,4 @@ def signup_comp():
             session.commit()
             return {"status": "User created"}
         except:
-            return {"status": "Usuário com este e-mail já existe"}, HTTPStatus.UNPROCESSABLE_ENTITY
+            return {"status": "ERROR: Usuário com este e-mail já existe"}, HTTPStatus.UNPROCESSABLE_ENTITY

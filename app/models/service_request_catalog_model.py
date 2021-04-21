@@ -12,4 +12,5 @@ class ServiceRequestCatalogModel(db.Model):
     feedback_url = db.Column(db.String(55), nullable=False)
     aproved = db.Column(db.String(55), nullable=False, unique=True)
     responsible = db.Column(db.String(55), nullable=False)
-    company = db.relationship('CompanyModel', backref=db.backref("services_catalog_done", lazy='joined'), lazy='joined')
+    company = db.relationship('CompanyModel', backref=db.backref(
+        "services_catalog_done", lazy='joined'), lazy='joined')

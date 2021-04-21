@@ -14,5 +14,7 @@ class ServiceSpecificModel(db.Model):
     feedback_url = db.Column(db.String(25))
     aproved = db.Column(db.Boolean, nullable=False)
     responsible = db.Column(db.String(25), nullable=False)
-    id_company = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
-    company = db.relationship('CompanyModel', backref=db.backref("services_specific_done", lazy='joined'), lazy='joined')
+    id_company = db.Column(db.Integer, db.ForeignKey(
+        'company.id'), nullable=False)
+    company = db.relationship('CompanyModel', backref=db.backref(
+        "services_specific_done", lazy='joined'), lazy='joined')

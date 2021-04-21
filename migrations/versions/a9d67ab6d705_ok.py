@@ -1,8 +1,8 @@
-"""create models
+"""ok
 
-Revision ID: a949dd4bbf82
+Revision ID: a9d67ab6d705
 Revises: 
-Create Date: 2021-04-21 11:40:41.520588
+Create Date: 2021-04-21 15:50:29.713626
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a949dd4bbf82'
+revision = 'a9d67ab6d705'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,9 +22,9 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nome', sa.String(length=25), nullable=False),
     sa.Column('email', sa.String(length=25), nullable=False),
-    sa.Column('password_hash', sa.String(length=25), nullable=False),
+    sa.Column('password', sa.String(length=80), nullable=False),
     sa.Column('phone', sa.String(length=15), nullable=False),
-    sa.Column('adress', sa.String(length=25), nullable=False),
+    sa.Column('address', sa.String(length=25), nullable=False),
     sa.Column('city', sa.String(length=15), nullable=False),
     sa.Column('state', sa.String(length=15), nullable=False),
     sa.Column('cpf_cnpj', sa.String(length=25), nullable=False),
@@ -35,21 +35,21 @@ def upgrade():
     )
     op.create_table('user_client',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=25), nullable=False),
-    sa.Column('email', sa.String(length=30), nullable=False),
-    sa.Column('password_hash', sa.String(length=25), nullable=False),
-    sa.Column('phone', sa.String(length=15), nullable=False),
-    sa.Column('adress', sa.String(length=25), nullable=False),
-    sa.Column('city', sa.String(length=15), nullable=False),
-    sa.Column('state', sa.String(length=15), nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('email', sa.String(length=100), nullable=False),
+    sa.Column('password', sa.String(length=255), nullable=False),
+    sa.Column('phone', sa.String(length=100), nullable=False),
+    sa.Column('address', sa.String(length=100), nullable=False),
+    sa.Column('city', sa.String(length=100), nullable=False),
+    sa.Column('state', sa.String(length=100), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
     op.create_table('feedbacks',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('feedback', sa.Text(), nullable=False),
-    sa.Column('company_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
+    sa.Column('id_company', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['id_company'], ['company.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('service_catalog',

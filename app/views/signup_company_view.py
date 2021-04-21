@@ -1,4 +1,5 @@
 from flask import Blueprint, request, current_app
+from werkzeug.security import generate_password_hash
 
 from http import HTTPStatus
 from app.models.signup_company_model import CompanyModel
@@ -20,11 +21,12 @@ def signup_comp():
 
     if check_json_data['can_register'] == True:
         user_data = check_json_data['try_register']
-
+        hashed_password = generate_password_hash(
+            user_data['password'], method='sha256')
         company = CompanyModel(
             nome=user_data["name"],
             email=user_data["email"],
-            password_hash=user_data["password"],
+            password=hashed_password,
             phone=user_data["phone"],
             adress=user_data["address"],
             city=user_data["city"],

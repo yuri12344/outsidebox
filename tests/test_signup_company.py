@@ -2,7 +2,7 @@ import requests
 import json
 
 
-def test_signup_company():
+def test_right_signup_company():
 
     given = {
         "name": "Mecanica do Pedro",
@@ -14,7 +14,7 @@ def test_signup_company():
         "state": "Parana",
         "cpf/cnpj": "860.402.201/12",
         "schedule": "seg-seg 8 as 18",
-        "description": "Fazemos manutenção de carro e moto,    completa e básica"
+        "description": "Fazemos manutenção de carro e moto, completa e básica"
     }
 
     expected = {
@@ -29,7 +29,8 @@ def test_signup_company():
             "cpf/cnpj": "860.402.201/12",
             "schedule": "seg-seg 8 as 18",
             "description": "Fazemos manutenção de carro e moto, completa e básica"
-        }
+        },
+        "can_register": "True"
     }
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     result = requests.post(

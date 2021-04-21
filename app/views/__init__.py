@@ -3,8 +3,8 @@ from flask import Flask
 
 def init_app(app: Flask):
 
-    # from app.views.feedback_view import bp_feedback
-    # app.register_blueprint(bp_feedback)
+    from app.views.feedback_view import bp_feedback
+    app.register_blueprint(bp_feedback)
 
     from app.views.signup_client_view import bp_client
     app.register_blueprint(bp_client)

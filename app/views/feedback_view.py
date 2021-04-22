@@ -13,6 +13,7 @@ def service(id_company, id_service, id_user):
 
     feedback = FeedbackModel(feedback=data["feedback"])
     # feedback = FeedbackModel(feedback=data["feedback"], id_company=id_company)
+
     session.add(feedback)
     session.commit()
 

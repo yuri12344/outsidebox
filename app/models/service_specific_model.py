@@ -12,7 +12,7 @@ class ServiceSpecificModel(db.Model):
     date_time = db.Column(db.String(25), nullable=False)
     informations = db.Column(db.String(255), nullable=False)
     feedback_url = db.Column(db.String(25))
-    aproved = db.Column(db.Boolean, nullable=False)
+    aproved = db.Column(db.String(25), nullable=False)
     responsible = db.Column(db.String(25), nullable=False)
     id_company = db.Column(db.Integer, db.ForeignKey(
         'company.id'), nullable=False)

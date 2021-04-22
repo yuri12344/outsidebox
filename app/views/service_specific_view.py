@@ -11,7 +11,13 @@ def specific_service(id_company=0):
     data = request.get_json()
 
     def str_to_bool(data):
-        return data.lower() in ("False", "True")
+        data = data.lower()
+        if data == "false":
+            return "False"
+        if data == "true":
+            return "True"
+        else:
+            return "invalid"
 
     service_specific = ServiceSpecificModel(
         name_of_service=data["name_of_service"],
@@ -22,7 +28,7 @@ def specific_service(id_company=0):
         date_time=data["date_time"],
         informations=data["informations"],
         feedback_url=data["feedback_url"],
-        aproved=str_to_bool(data),
+        aproved=str_to_bool(data['aproved']),
         responsible=data["responsible"],
         id_company=id_company
     )

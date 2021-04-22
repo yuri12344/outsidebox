@@ -14,5 +14,5 @@ def init_app(app: Flask):
     from app.models.signup_client_model import ClientModel
     #from app.models.feedback_model import FeedbackModel
 
-    #from app.models.service_request_catalog_model import ServiceRequestCatalogModel
+    from app.models.service_request_catalog_model import ServiceRequestCatalogModel
     from app.models.service_specific_model import ServiceSpecificModel

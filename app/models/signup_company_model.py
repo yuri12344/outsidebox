@@ -1,7 +1,4 @@
 from . import db
-# from dataclasses import dataclass
-# from sqlalchemy import Column, integer, String
-# from sqlalchemy.orm import relationship
 
 
 class CompanyModel(db.Model):
@@ -18,6 +15,3 @@ class CompanyModel(db.Model):
     cpf_cnpj = db.Column(db.String(25), nullable=False)
     schedule = db.Column(db.String(25), nullable=False)
     description = db.Column(db.String(100), nullable=False)
-
-    # lista de feedbaks
-    # feedbacks = relationship("Feedbaks", back_populates="company")

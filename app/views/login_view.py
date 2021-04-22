@@ -21,7 +21,7 @@ bp_login = Blueprint('/login', __name__, url_prefix='/login')
 @bp_login.route('/', methods=['POST'])
 def login():
     auth = request.get_json()
-
+    
     company = CompanyModel.query.filter_by(email=auth['email']).first()
     client = ClientModel.query.filter_by(email=auth['email']).first()
 

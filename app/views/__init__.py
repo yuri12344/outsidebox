@@ -43,8 +43,8 @@ def init_app(app: Flask):
     app.register_blueprint(bp_client)
 
     # Rota 11 LOGIN
-    # from app.views.login_view import bp_login
-    # app.register_blueprint(bp_login)
+    from app.views.login_view import bp_login
+    app.register_blueprint(bp_login)
 
     # Rota 12 CLIENT PROFILE
     from app.views.profile_client_view import bp_client_profile

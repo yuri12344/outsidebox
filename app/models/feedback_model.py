@@ -13,5 +13,6 @@ class FeedbackModel(db.Model):
     # company = db.relationship('CompanyModel', backref=db.backref(
     #     "feedback_list", lazy='joined'), lazy="joined")
 
-    # id_company = db.Column(db.Integer, db.ForeignKey('company.id'))  # nome da tabela . nome da coluna da
-    # company = db.
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id',ondelete='CASCADE',onupdate="CASCADE"))  # nome da tabela . nome da coluna models.DateField(_(""), auto_now=False, auto_now_add=False)
+   
+    company= db.relationship('CompanyModel', backref="feedback_list")

@@ -21,12 +21,11 @@ def client():
 
     if validate_user['can_register'] == True:
         user_data = validate_user['try_register']
-        hash_password = generate_password_hash(
-            user_data['password'], method="sha256")
+
         client = ClientModel(  # criação da modelflask
             name=user_data["name"],
             email=user_data["email"],
-            password=hash_password,
+            password=user_data['password'],
             phone=user_data["phone"],
             address=user_data["address"],
             city=user_data["city"],

@@ -15,7 +15,7 @@ def create_app():
     app.config["JSON_SORT_KEYS"] = False
 
     app.config['SECRET_KEY'] = [
-        {"secret_key": "chavesecreta"}, {"token": "vazio_"}]
+        {"secret_key": "chavesecreta"}, {"token": "vazio"}, {"user": "precisa fazer o login"}]
 
     # Inicializamos as configurações do nosso db e da nossa migration, que agora estão para o uso
     database.init_app(app)

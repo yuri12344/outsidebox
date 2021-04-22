@@ -1,4 +1,5 @@
-from app.views.login_view import token_required
+from app.views.login_view import token_required, current_app
+from app.models.service_specific_model import ServiceSpecificModel
 from flask import Blueprint, request, jsonify
 
 bp_services_specific = Blueprint(
@@ -55,4 +56,3 @@ def specific_service(id_company=0):
 @bp_services_specific.route('/', methods=['POST'])
 def only_slash():
     return jsonify({'message': 'you need use url => services_specific/create/<id_company> '})
-

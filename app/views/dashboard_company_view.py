@@ -21,9 +21,10 @@ def all_companys(id_company=0):
             "company_name": user_logged['nome'],
             "clients_list": [],
             "services_catalog": user_logged['service_catalog_list'],
-            "link_create_service_catalog": f"{base_url}/services_catalog/create/{id_company_loged}",
-            "link_create_service_specific": f"{base_url}/services_specific/create/{id_company_loged}",
-            "company_profile": f"{base_url}/company/{id_company_loged}"
+            "create_service_to_catalog": f"{base_url}/service_catalog/create/{id_company_loged}",
+            "create_service_from_catalog": f"{base_url}/catalog_service_request/{id_company_loged}",
+            "create_service_specific": f"{base_url}/services_specific/create/{id_company_loged}",
+            "company_profile": f"{base_url}/companys/{id_company_loged}"
         }
         if int(id_company) != int(user_logged['id']):
             return jsonify(

@@ -1,7 +1,13 @@
 from . import db
+from dataclasses import dataclass
 
 
+@dataclass
 class ServiceCatalogModel(db.Model):
+    id: int
+    name_of_service: str
+    price: str
+    service_description: str
 
     __tablename__ = 'service_catalog'
 

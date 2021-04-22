@@ -40,5 +40,5 @@ def specific_company(id_company):
                     "cpf/cnpj": company.cpf_cnpj,
                     "description": company.description,
                     "schedule": company.schedule,
-                    "service_catolog": []
+                    "service_catalog": company.service_catalog_list
                     })

@@ -18,4 +18,3 @@ def service(id_company, id_service, id_user):
     session.commit()
 
     return {"feedback": feedback.feedback, "id_company": id_company, "id_service": id_service, "id_user": id_user}, HTTPStatus.CREATED
-    # return {"feedback": feedback.feedback, "id_company": feedback.id_company}, HTTPStatus.CREATED

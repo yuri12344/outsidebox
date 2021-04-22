@@ -1,7 +1,7 @@
 from . import db
-from dataclasses import dataclass
-from sqlalchemy import Column, integer, String
-from sqlalchemy.orm import relationship
+# from dataclasses import dataclass
+# from sqlalchemy import Column, integer, String
+# from sqlalchemy.orm import relationship
 
 
 class CompanyModel(db.Model):
@@ -20,4 +20,4 @@ class CompanyModel(db.Model):
     description = db.Column(db.String(100), nullable=False)
 
     # lista de feedbaks
-    feedbacks = relationship("Feedbaks", back_populates="company")
+    # feedbacks = relationship("Feedbaks", back_populates="company")

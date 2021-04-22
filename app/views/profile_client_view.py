@@ -16,7 +16,6 @@ bp_client_profile = Blueprint(
 def get_user_data(id_client=0):
     user = current_app.secret_key[2]
     user = user['user']
-    print(user)
     try:
         user.get(user['description'])
         return jsonify({"message": "This page is only for CLIENTS, not company, please leave, you are not welcome"})

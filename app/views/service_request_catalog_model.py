@@ -1,3 +1,4 @@
+from app.views.login_view import token_required
 from flask import Blueprint, request, jsonify
 
 bp_catalog_service_request = Blueprint(

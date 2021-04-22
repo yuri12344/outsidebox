@@ -14,7 +14,8 @@ def create_app():
     # Setamos como False para o Flask não organzizar nossas keys por ordem alfabetica
     app.config["JSON_SORT_KEYS"] = False
 
-    app.config['SECRET_KEY'] = 'chavesecreta'
+    app.config['SECRET_KEY'] = [
+        {"secret_key": "chavesecreta"}, {"token": "vazio"}, {"user": "precisa fazer o login"}]
 
     # Inicializamos as configurações do nosso db e da nossa migration, que agora estão para o uso
     database.init_app(app)

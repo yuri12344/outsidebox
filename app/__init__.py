@@ -3,6 +3,8 @@ from os import getenv
 from app.configurations import database, migration
 from app import views
 
+# deploy
+
 
 def create_app():
     app = Flask(__name__)

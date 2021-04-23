@@ -1,8 +1,11 @@
 
-from flask import Blueprint, request, current_app
+from flask import Blueprint, request, current_app, jsonify
 from app.views.login_view import token_required
 from http import HTTPStatus
 from app.models.feedback_model import FeedbackModel
+from app.models.signup_client_model import ClientModel
+from app.models.service_specific_model import ServiceSpecificModel
+from app.models.service_request_catalog_model import ServiceRequestCatalogModel
 
 bp_feedback = Blueprint('bp_feedback', __name__)
 
@@ -11,9 +14,20 @@ bp_feedback = Blueprint('bp_feedback', __name__)
 @token_required
 def service(id_company=0, id_service=0, id_user=0):
     session = current_app.db.session
+    user = current_app.secret_key[2]['user']
+    client_check = ClientModel.query.filter_by(id=id_user).first()
+    if client_check.email != user['email']:
+        return jsonify({"message": "Wrong user loged"})
+
+    service_specifc_check = ServiceSpecificModel.query.filter_by(
+        id=id_service).first()
+    service_catalog_check = ServiceRequestCatalogModel.query.filter_by(
+        id=id_service).first()
+
+    if not service_specifc_check and not service_catalog_check:
+        return jsonify({'message': 'this service id not exists'})
+
     data = request.get_json()
-    user = current_app.secret_key[2]
-    user = user['user']
     if id_company == 0 or id_service == 0 or id_user == 0:
         return {"message": "dados passados por parametro invalidos"}
 
@@ -26,7 +40,8 @@ def service(id_company=0, id_service=0, id_user=0):
         if len(data['feedback']) > 244:
             return {"message": "feedback não pode ter mais que 244 caracteres"}
         data.get(data['feedback'])
-        feedback = FeedbackModel(feedback=data["feedback"], company_id=id_company)
+        feedback = FeedbackModel(
+            feedback=data["feedback"], company_id=id_company)
         session.add(feedback)
         session.commit()
 

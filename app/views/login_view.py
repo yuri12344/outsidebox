@@ -35,14 +35,14 @@ def login():
         if company.password == auth['password']:
             current_app.secret_key[1]['token'] = "logado"
             current_app.secret_key[2]['user'] = company.__dict__
-            return jsonify({'message': f'Usuário {company.nome} logado com sucesso'})
+            return jsonify({'message': f'Usuário {company.name} do tipo company logado com sucesso'})
         return jsonify({'message': 'senha errada ou email errado'})
 
     if client:
         if client.password == auth['password']:
             current_app.secret_key[1]['token'] = "logado"
             current_app.secret_key[2]['user'] = client.__dict__
-            return jsonify({'message': f'Usuário {client.name} logado com sucesso'})
+            return jsonify({'message': f'Usuário {client.name} do tipo client logado com sucesso'})
         return jsonify({'message': 'senha errada ou email errado'})
 
     return make_response('Could not verify!', 401)

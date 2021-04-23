@@ -1,11 +1,9 @@
-from app.models import service_request_catalog_model
 from app.views.login_view import token_required, current_app
 from flask import Blueprint, request, jsonify
 from app.services.validate_service_request_catalog import ValidateServiceRequestFromCatalog
 from app.models.service_request_catalog_model import ServiceRequestCatalogModel
-from app.services.random_id import id_generator
+from app.models.services_created import ServicesCreated
 import os
-import binascii
 bp_catalog_service_request = Blueprint(
     'bp_catalog_service_request', __name__, url_prefix='/catalog_service_request/')
 
@@ -13,17 +11,15 @@ bp_catalog_service_request = Blueprint(
 @bp_catalog_service_request.route('/', methods=['POST'])
 @token_required
 def service_request_catalog():
+    base_url = os.getenv('BASE_URL')
     session = current_app.db.session
-    randhash = id_generator()
 
     company_logged = current_app.secret_key[2]['user']
     data = request.json
-
+    validate_data = ValidateServiceRequestFromCatalog(data)
+    validate_data = validate_data.__dict__
     try:
         company_logged.get(company_logged['description'])
-
-        validate_data = ValidateServiceRequestFromCatalog(data)
-        validate_data = validate_data.__dict__
 
         if validate_data['can_register'] == True:
             service = ServiceRequestCatalogModel(
@@ -33,27 +29,33 @@ def service_request_catalog():
                 feedback_url=validate_data['feedback'],
                 aproved=validate_data['aproved'],
                 responsible=validate_data['responsible'],
-                id_company=company_logged['id'],
+                id_company=int(company_logged['id']),
                 id_client=validate_data['id_client'],
-                id_service_catalog=validate_data['id_service'],
-                hash_to_feedback=randhash
+                id_service_catalog=int(validate_data['id_service'])
             )
             session.add(service)
             session.commit()
 
-            update_service = ServiceRequestCatalogModel.query.filter_by(
-                hash_to_feedback=randhash).first()
+            services_created = ServicesCreated(
+                id_service_create_catalog=service.id,
+                id_company=company_logged['id'],
+                from_='catalog'
+            )
+            try:
+                session.add(services_created)
+                session.commit()
+            except:
+                return jsonify({'message': 'just try again'})
 
             company_loged_id = company_logged['id']
-            base_url = os.getenv('BASE_URL')
             url = base_url + "/feedback/" + \
-                str(company_loged_id) + "/" + str(update_service.id) + \
+                str(company_loged_id) + "/" + str(services_created.id) + \
                 "/" + str(validate_data['id_client'])
 
-            url_to_get_service = base_url + "/" + \
-                str(company_loged_id) + "/" + str(update_service.id)
+            url_to_get_service = base_url + "/get_services/" + \
+                str(company_loged_id) + "/" + str(services_created.id)
             if validate_data["feedback"] == "True":
-                update_service.feedback_url = url
+                service.feedback_url = url
                 session.commit()
                 return jsonify({
                     'status': 'sucess',
@@ -66,4 +68,4 @@ def service_request_catalog():
             return jsonify({'message': validate_data['specific_error']})
 
     except KeyError:
-        return jsonify({'message': 'Apenas usuário do tipo empresa pode acessar essa rota'})
+        return jsonify({'message': validate_data['specific_error']})

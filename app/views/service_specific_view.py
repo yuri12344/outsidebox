@@ -2,7 +2,7 @@ from app.views.login_view import token_required
 from flask import Blueprint, request, jsonify, current_app
 from app.models.service_specific_model import ServiceSpecificModel
 from app.services.validate_service_specific import ValidateServiceSpecific
-from app.services.random_id import id_generator
+from app.models.services_created import ServicesCreated
 import os
 
 bp_services_specific = Blueprint(
@@ -19,7 +19,6 @@ def specific_service():
         company_logged.get(company_logged['description'])
     except KeyError:
         return {"msg": "Você precisa logar como empresa para acessar esta rota"}
-    randhash = id_generator()
 
     data = request.json
     data = ValidateServiceSpecific(data)
@@ -36,7 +35,6 @@ def specific_service():
             date_time=data['date_time'],
             informations=data['informations'],
             feedback_url=data['feedback'],
-            hash_to_feedback=randhash,
             aproved=data['aproved'],
             responsible=data['responsible'],
             id_company=company_logged['id'],
@@ -44,22 +42,30 @@ def specific_service():
         session.add(service_specifc_request)
         session.commit()
 
-        update_service = ServiceSpecificModel.query.filter_by(
-            hash_to_feedback=randhash).first()
+        service_create = ServicesCreated(
+            id_service_create_specific=service_specifc_request.id,
+            id_company=company_logged['id'],
+            from_="specific"
+        )
+        try:
+            session.add(service_create)
+            session.commit()
+        except:
+            return jsonify({'message': 'Just try again'})
 
         company_loged_id = company_logged['id']
         url = base_url + "/feedback/" + \
-            str(company_loged_id) + "/" + str(update_service.id) + \
+            str(company_loged_id) + "/" + str(service_create.id) + \
             "/" + str(data['id_client'])
 
-        url_to_get_service = base_url + "/" + \
-            str(company_loged_id) + "/" + str(update_service.id)
+        url_to_get_service = base_url + "/get_services/" + \
+            str(company_loged_id) + "/" + str(service_create.id)
         if data["feedback"] == "True":
-            update_service.feedback_url = url
+            service_create.feedback_url = url
             session.commit()
             return jsonify({'status': 'Criado com sucesso', 'Link': url_to_get_service, 'Link p/ feedback': url})
 
-        return jsonify({'status': 'Criado com sucesso', 'Link': url_to_get_service, 'Link p/ feedback': url})
+        return jsonify({'status': 'Criado com sucesso', 'Link': url_to_get_service})
 
     except KeyError:
         return jsonify({'message': 'Apenas usuário do tipo empresa pode acessar essa rota'})

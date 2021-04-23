@@ -1,9 +1,6 @@
-from flask import json
 from flask.globals import current_app
-from flask_sqlalchemy import SQLAlchemy
 import os
 from app.models.service_catalog_model import ServiceCatalogModel
-from app.models.service_request_catalog_model import ServiceRequestCatalogModel
 from app.models.signup_client_model import ClientModel
 import datetime
 
@@ -59,23 +56,28 @@ class ValidateServiceRequestFromCatalog():
 
     def check_id_service(self, json):
         service = ServiceCatalogModel.query.filter_by(
-            id=json['id_service']).first()
+            id=int(json['id_service'])).first()
         if not service:
             self.can_register = False
-            self.specific_error = "This id no exists, please give a real id or create one"
+            self.specific_error = "Este id_service não existe, por favor, primeiro crie um serviço para o catalog"
         if service:
             self.can_register = True
             self.service_to_create = service.__dict__
-            self.id_service = json['id_service']
+            self.id_service = int(json['id_service'])
 
     def check_id_client(self, json):
-        client = ClientModel.query.filter_by(id=json['id_client']).first()
-        if client:
-            self.id_client = json['id_client']
-            self.feedback = "True"
-        if not client:
-            self.id_client = None
+        if json['id_client'] == "":
             self.feedback = "False"
+            self.id_client = None
+            return {}
+        if json['id_client'] != "" or json['id_client'] != 0:
+            check_client = ClientModel.query.get(int(json['id_client']))
+            if not check_client:
+                self.feedback = "False"
+                self.id_client = None
+            if check_client:
+                self.feedback = "True"
+                self.id_client = int(json['id_client'])
 
     def check_client_name(self, json):
         self.client_name = json['client_name']

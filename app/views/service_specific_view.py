@@ -1,6 +1,9 @@
 from app.views.login_view import token_required
 from flask import Blueprint, request, jsonify, current_app
 from app.models.service_specific_model import ServiceSpecificModel
+from app.services.validate_service_specific import ValidateServiceSpecific
+from app.services.random_id import id_generator
+import os
 
 bp_services_specific = Blueprint(
     'bp_services_specific', __name__, url_prefix='/services_specific/create')
@@ -8,60 +11,55 @@ bp_services_specific = Blueprint(
 
 @bp_services_specific.route('/', methods=['POST'])
 @token_required
-def specific_service(id_company=1):
+def specific_service():
+    base_url = os.getenv('BASE_URL')
+    session = current_app.db.session
     company_logged = current_app.secret_key[2]['user']
-    print(company_logged)
-
     try:
         company_logged.get(company_logged['description'])
-
-        session = current_app.db.session
-        data = request.get_json()
-
-        def str_to_bool(data):
-            data = data.lower()
-            if data == "false":
-                return "False"
-            if data == "true":
-                return "True"
-            else:
-                return "invalid"
-
-        service_specific = ServiceSpecificModel(
-            name_of_service=data["name_of_service"],
-            price=data["price"],
-            service_description=data["service_description"],
-            client_name=data["client_name"],
-            id_client=data["id_client"],
-            date_time=data["date_time"],
-            informations=data["informations"],
-            feedback_url=data["feedback_url"],
-            aproved=str_to_bool(data['aproved']),
-            responsible=data["responsible"],
-            id_company=company_logged['id']
-        )
-
-        session.add(service_specific)
-        session.commit()
-        return {
-            "status": "created sucess",
-            "id": service_specific.id,
-            "name_of_service": service_specific.name_of_service,
-            "price": service_specific.price,
-            "service_description": service_specific.service_description,
-            "client_name": service_specific.client_name,
-            "id_client": service_specific.id_client,
-            "date_time": service_specific.date_time,
-            "informations": service_specific.informations,
-            "feedback_url": service_specific.feedback_url,
-            "aproved": service_specific.aproved,
-            "responsible": service_specific.responsible,
-            "id_company": service_specific.id_company
-        }
     except KeyError:
-        return {"msg": "Só pode ser executado por uma empresa"}
+        return {"msg": "Você precisa logar como empresa para acessar esta rota"}
+    randhash = id_generator()
 
+    data = request.json
+    data = ValidateServiceSpecific(data)
+    data = data.__dict__
+    if data['can_register'] == False:
+        return jsonify({'status': data['specific_error']})
+    try:
+        service_specifc_request = ServiceSpecificModel(
+            name_of_service=data['name_of_service'],
+            price=data['price'],
+            service_description=data['service_description'],
+            client_name=data['client_name'],
+            id_client=data['id_client'],
+            date_time=data['date_time'],
+            informations=data['informations'],
+            feedback_url=data['feedback'],
+            hash_to_feedback=randhash,
+            aproved=data['aproved'],
+            responsible=data['responsible'],
+            id_company=company_logged['id'],
+        )
+        session.add(service_specifc_request)
+        session.commit()
 
-@bp_services_specific.route('/', methods=['POST'])
-def only_slash():
-    return jsonify({'message': 'you need use url => services_specific/create/<id_company> '})
+        update_service = ServiceSpecificModel.query.filter_by(
+            hash_to_feedback=randhash).first()
+
+        company_loged_id = company_logged['id']
+        url = base_url + "/feedback/" + \
+            str(company_loged_id) + "/" + str(update_service.id) + \
+            "/" + str(data['id_client'])
+
+        url_to_get_service = base_url + "/" + \
+            str(company_loged_id) + "/" + str(update_service.id)
+        if data["feedback"] == "True":
+            update_service.feedback_url = url
+            session.commit()
+            return jsonify({'status': 'Criado com sucesso', 'Link': url_to_get_service, 'Link p/ feedback': url})
+
+        return jsonify({'status': 'Criado com sucesso', 'Link': url_to_get_service, 'Link p/ feedback': url})
+
+    except KeyError:
+        return jsonify({'message': 'Apenas usuário do tipo empresa pode acessar essa rota'})

@@ -16,11 +16,12 @@ class ServiceRequestCatalogModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     client_name = db.Column(db.String(55), nullable=False)
-    date_time = db.Column(db.String(25), nullable=False)
+    date_time = db.Column(db.String(100), nullable=False)
     informations = db.Column(db.String(255))
-    feedback_url = db.Column(db.String(55), nullable=False)
+    feedback_url = db.Column(db.String(255), nullable=True)
     aproved = db.Column(db.String(55), nullable=False)
     responsible = db.Column(db.String(55), nullable=False)
+    hash_to_feedback = db.Column(db.String(255), nullable=True, unique=True)
 
     id_company = db.Column(db.Integer, db.ForeignKey(
         'company.id'), nullable=False)

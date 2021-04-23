@@ -6,14 +6,15 @@ from app.models.service_catalog_model import ServiceCatalogModel
 from app.models.service_request_catalog_model import ServiceRequestCatalogModel
 from app.models.signup_client_model import ClientModel
 import datetime
-
 base_url = os.getenv('BASE_URL')
 
 
 json_to_register = {
-    "id_service": "ID from created service in catalog ex: 1",
-    "client_name": "Optional",
-    "id_client": "Optional, if client have account put id_client here",
+    "name_of_service": "Name of specific service",
+    "client_name": "Client name",
+    "id_client": "int - Optional",
+    "price": "Service price",
+    "service_description": "Short specific service description",
     "informations": "links or extra informations",
     "feedback": "*",
     "aproved": "Bool, True or False, if client aproved the service, put True, if is a budget, put False",
@@ -21,30 +22,35 @@ json_to_register = {
 }
 
 
-class ValidateServiceRequestFromCatalog():
+class ValidateServiceSpecific():
     def __init__(self, *args):
-        self.can_register = False
+        self.can_register = True
         self.specific_error = "0"
-        self.id_service = ""
-        self.id_client = ""
-        self.service_to_create = []
+        self.name_of_service = ""
         self.client_name = ""
-        self.date_time = ""
+        self.id_client = ""
+        self.price = ""
+        self.service_description = ""
         self.informations = ""
         self.feedback = ""
-        self.aproved = True
+        self.hash_to_feedback = ""
+        self.aproved = False
         self.responsible = ""
+        self.date_time = ""
         self.validate_data = self.validate_data(*args)
 
     def validate_data(self, json):
         self.check_keys(json)
-        self.check_id_service(json)
-        self.check_id_client(json)
+        self.check_name_of_service(json)
         self.check_client_name(json)
-        self.check_date_time()
+        self.check_id_client(json)
+        self.check_price(json)
+        self.check_service_description(json)
         self.check_informations(json)
         self.check_aproved(json)
         self.check_responsible(json)
+        self.check_date_time()
+
         return "check"
 
     def check_keys(self, json):
@@ -57,16 +63,14 @@ class ValidateServiceRequestFromCatalog():
         self.can_register = True
         return "checked"
 
-    def check_id_service(self, json):
-        service = ServiceCatalogModel.query.filter_by(
-            id=json['id_service']).first()
-        if not service:
+    def check_name_of_service(self, json):
+        if len(json['name_of_service']) == 0:
             self.can_register = False
-            self.specific_error = "This id no exists, please give a real id or create one"
-        if service:
-            self.can_register = True
-            self.service_to_create = service.__dict__
-            self.id_service = json['id_service']
+            self.specific_error = "Name of service cannot be blank"
+        self.name_of_service = json['name_of_service']
+
+    def check_client_name(self, json):
+        self.client_name = json['client_name']
 
     def check_id_client(self, json):
         client = ClientModel.query.filter_by(id=json['id_client']).first()
@@ -77,17 +81,26 @@ class ValidateServiceRequestFromCatalog():
             self.id_client = None
             self.feedback = "False"
 
-    def check_client_name(self, json):
-        self.client_name = json['client_name']
+    def check_price(self, json):
+        if len(json['price']) > 0 and len(json['price']) <= 25:
+            self.price = json['price']
+        else:
+            self.can_register = False
+            self.specific_error = "Your price need more then 0 caracters and below 25 caracters"
 
-    def check_date_time(self):
-        self.date_time = datetime.datetime.now()
+    def check_service_description(self, json):
+        if len(json['service_description']) > 0 and len(json['service_description']) <= 255:
+            self.service_description = json['service_description']
+        else:
+            self.can_register = False
+            self.specific_error = "Your description need more then 0 caracter and below 255"
 
     def check_informations(self, json):
-        if len(json['informations']) == 0:
+        if len(json['informations']) > 0 and len(json['informations']) <= 255:
+            self.informations = json['informations']
+        else:
             self.can_register = False
-            self.specific_error = "Informations cannot be blank"
-        self.informations = json['informations']
+            self.informations = "Your informations need more then 0 caracter and below 255"
 
     def check_aproved(self, json):
         text_lower = json['aproved']
@@ -99,6 +112,9 @@ class ValidateServiceRequestFromCatalog():
         if text_lower != "false" and text_lower != "true":
             self.can_register = False
             self.specific_error = "In aproved, you need give True or False"
+
+    def check_date_time(self):
+        self.date_time = datetime.datetime.now()
 
     def check_responsible(self, json):
         self.responsible = json['responsible']

@@ -1,6 +1,4 @@
 from flask import json
-from flask.globals import current_app
-from flask_sqlalchemy import SQLAlchemy
 import os
 from app.models.service_catalog_model import ServiceCatalogModel
 from app.models.service_request_catalog_model import ServiceRequestCatalogModel
@@ -33,7 +31,6 @@ class ValidateServiceSpecific():
         self.service_description = ""
         self.informations = ""
         self.feedback = ""
-        self.hash_to_feedback = ""
         self.aproved = False
         self.responsible = ""
         self.date_time = ""
@@ -73,13 +70,18 @@ class ValidateServiceSpecific():
         self.client_name = json['client_name']
 
     def check_id_client(self, json):
-        client = ClientModel.query.filter_by(id=json['id_client']).first()
-        if client:
-            self.id_client = json['id_client']
-            self.feedback = "True"
-        if not client:
+        if json['id_client'] == "":
             self.id_client = None
             self.feedback = "False"
+            return "ok"
+        if int(json['id_client']) != 0:
+            client = ClientModel.query.filter_by(id=json['id_client']).first()
+            if client:
+                self.id_client = json['id_client']
+                self.feedback = "True"
+            if not client:
+                self.id_client = None
+                self.feedback = "False"
 
     def check_price(self, json):
         if len(json['price']) > 0 and len(json['price']) <= 25:

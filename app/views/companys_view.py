@@ -31,7 +31,6 @@ def specific_company(id_company):
     company = CompanyModel.query.get(id_company)
     if not company:
         return jsonify({'status': 'This company does not exists'})
-
     return jsonify({"company_name": company.name,
                     "email": company.email,
                     "phone": company.phone,

@@ -9,14 +9,18 @@ bp_service_catalog = Blueprint(
     'bp_service_catalog', __name__, url_prefix='/service_catalog')
 
 
-@bp_service_catalog.route('/create/<int:id_company>', methods=['POST'])
+@bp_service_catalog.route('/create/', methods=['POST'])
 @token_required
-def service_catalog(id_company):
+def service_catalog():
     user_loged = current_app.secret_key[2]['user']
     session = current_app.db.session
     data = request.get_json()
+
     company_to_create_service = CompanyModel.query.filter_by(
-        id=id_company).first()
+        id=user_loged['id']).first()
+
+    if not company_to_create_service:
+        return jsonify({'message': "Voce precisa ser uma empresa para crar um serviço no catalogo"})
 
     if company_to_create_service.email != user_loged['email']:
         return jsonify({'message': 'Só pode ser feito por uma company'})
@@ -34,7 +38,7 @@ def service_catalog(id_company):
             name_of_service=user_data["name_of_service"],
             price=user_data["price"],
             service_description=user_data["service_description"],
-            id_company=id_company
+            id_company=user_loged['id']
         )
 
         try:

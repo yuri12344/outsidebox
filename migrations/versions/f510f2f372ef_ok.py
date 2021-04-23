@@ -1,8 +1,8 @@
 """ok
 
-Revision ID: 5d1bba8e946f
+Revision ID: f510f2f372ef
 Revises: 
-Create Date: 2021-04-22 22:36:37.092703
+Create Date: 2021-04-23 01:44:23.477061
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5d1bba8e946f'
+revision = 'f510f2f372ef'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -65,33 +65,37 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name_of_service', sa.String(length=55), nullable=False),
     sa.Column('price', sa.String(length=20), nullable=True),
-    sa.Column('service_description', sa.String(length=25), nullable=False),
+    sa.Column('service_description', sa.String(length=255), nullable=False),
     sa.Column('client_name', sa.String(length=25), nullable=False),
     sa.Column('id_client', sa.Integer(), nullable=True),
-    sa.Column('date_time', sa.String(length=25), nullable=False),
+    sa.Column('date_time', sa.String(length=100), nullable=False),
     sa.Column('informations', sa.String(length=255), nullable=False),
-    sa.Column('feedback_url', sa.String(length=25), nullable=True),
+    sa.Column('feedback_url', sa.String(length=255), nullable=True),
+    sa.Column('hash_to_feedback', sa.String(length=255), nullable=True),
     sa.Column('aproved', sa.String(length=25), nullable=False),
     sa.Column('responsible', sa.String(length=25), nullable=False),
     sa.Column('id_company', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['id_company'], ['company.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('hash_to_feedback')
     )
     op.create_table('service_request_catalog',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('client_name', sa.String(length=55), nullable=False),
-    sa.Column('date_time', sa.String(length=25), nullable=False),
+    sa.Column('date_time', sa.String(length=100), nullable=False),
     sa.Column('informations', sa.String(length=255), nullable=True),
-    sa.Column('feedback_url', sa.String(length=55), nullable=False),
+    sa.Column('feedback_url', sa.String(length=255), nullable=True),
     sa.Column('aproved', sa.String(length=55), nullable=False),
     sa.Column('responsible', sa.String(length=55), nullable=False),
+    sa.Column('hash_to_feedback', sa.String(length=255), nullable=True),
     sa.Column('id_company', sa.Integer(), nullable=False),
     sa.Column('id_client', sa.Integer(), nullable=True),
     sa.Column('id_service_catalog', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['id_client'], ['client.id'], ),
     sa.ForeignKeyConstraint(['id_company'], ['company.id'], ),
     sa.ForeignKeyConstraint(['id_service_catalog'], ['service_catalog.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('hash_to_feedback')
     )
     # ### end Alembic commands ###
 

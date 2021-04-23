@@ -5,7 +5,7 @@ class CompanyModel(db.Model):
     __tablename__ = 'company'
 
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(25), nullable=False)
+    name = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(25), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     phone = db.Column(db.String(15), nullable=False)

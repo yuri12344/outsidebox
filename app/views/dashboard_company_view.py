@@ -18,7 +18,7 @@ def all_companys(id_company=0):
         id_company_loged = user_logged['id']
         json_to_return = {
             "your_id_company": user_logged['id'],
-            "company_name": user_logged['nome'],
+            "company_name": user_logged['name'],
             "clients_list": [],
             "services_catalog": user_logged['service_catalog_list'],
             "create_service_to_catalog": f"{base_url}/service_catalog/create/{id_company_loged}",

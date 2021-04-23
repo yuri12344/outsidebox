@@ -1,7 +1,8 @@
+from flask.json import jsonify
 from app.views.login_view import token_required
 from flask import Blueprint, request, current_app
 from app.services.validated_service_catalog import ValidatedServiceCatalog
-from http import HTTPStatus
+from app.models.signup_company_model import CompanyModel
 from app.models.service_catalog_model import ServiceCatalogModel
 
 bp_service_catalog = Blueprint(
@@ -11,8 +12,14 @@ bp_service_catalog = Blueprint(
 @bp_service_catalog.route('/create/<int:id_company>', methods=['POST'])
 @token_required
 def service_catalog(id_company):
+    user_loged = current_app.secret_key[2]['user']
     session = current_app.db.session
     data = request.get_json()
+    company_to_create_service = CompanyModel.query.filter_by(
+        id=id_company).first()
+
+    if company_to_create_service.email != user_loged['email']:
+        return jsonify({'message': 'Só pode ser feito por uma company'})
 
     validated_service_catalog = ValidatedServiceCatalog(data)
     validated_service_catalog = validated_service_catalog.__dict__

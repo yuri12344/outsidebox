@@ -10,7 +10,7 @@ def create_app():
     app = Flask(__name__)
 
     # Aqui nós passamos o "SQLALCHEMY_DATABASE_URI" que foi feito lá no .env
-    app.config["SQLALCHEMY_DATABASE_URI"] = getenv("SQLALCHEMY_DATABASE_URI")
+    app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
     # Aqui nós passamos False para evitar mensagens de avisos no terminal
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     # Setamos como False para o Flask não organzizar nossas keys por ordem alfabetica

@@ -6,6 +6,7 @@ from app.models.feedback_model import FeedbackModel
 from app.models.signup_client_model import ClientModel
 from app.models.service_specific_model import ServiceSpecificModel
 from app.models.service_request_catalog_model import ServiceRequestCatalogModel
+from app import user_logged
 
 bp_feedback = Blueprint('bp_feedback', __name__)
 
@@ -14,7 +15,7 @@ bp_feedback = Blueprint('bp_feedback', __name__)
 @token_required
 def service(id_company=0, id_service=0, id_user=0):
     session = current_app.db.session
-    user = current_app.secret_key[2]['user']
+    user = user_logged[2]['user']
     client_check = ClientModel.query.filter_by(id=id_user).first()
     if client_check.email != user['email']:
         return jsonify({"message": "Wrong user loged"})

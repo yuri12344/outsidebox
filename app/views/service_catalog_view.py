@@ -4,6 +4,7 @@ from flask import Blueprint, request, current_app
 from app.services.validated_service_catalog import ValidatedServiceCatalog
 from app.models.signup_company_model import CompanyModel
 from app.models.service_catalog_model import ServiceCatalogModel
+from app import user_logged
 
 bp_service_catalog = Blueprint(
     'bp_service_catalog', __name__, url_prefix='/service_catalog')
@@ -12,7 +13,7 @@ bp_service_catalog = Blueprint(
 @bp_service_catalog.route('/create/', methods=['POST'])
 @token_required
 def service_catalog():
-    user_loged = current_app.secret_key[2]['user']
+    user_loged = user_logged[2]['user']
     session = current_app.db.session
     data = request.get_json()
 

@@ -4,6 +4,7 @@ from app.models.service_specific_model import ServiceSpecificModel
 from app.services.validate_service_specific import ValidateServiceSpecific
 from app.models.services_created import ServicesCreated
 import os
+from app import user_logged
 
 bp_services_specific = Blueprint(
     'bp_services_specific', __name__, url_prefix='/services_specific/create')
@@ -14,7 +15,7 @@ bp_services_specific = Blueprint(
 def specific_service():
     base_url = os.getenv('BASE_URL')
     session = current_app.db.session
-    company_logged = current_app.secret_key[2]['user']
+    company_logged = user_logged[2]['user']
     try:
         company_logged.get(company_logged['description'])
     except KeyError:

@@ -2,8 +2,10 @@ from flask import Flask
 from os import getenv
 from app.configurations import database, migration
 from app import views
+import sys
 
 # deploy 2
+import logging
 
 
 def create_app():
@@ -23,6 +25,8 @@ def create_app():
     database.init_app(app)
     migration.init_app(app)
     views.init_app(app)
+    app.logger.addHandler(logging.StreamHandler(sys.stdout))
+    app.logger.setLevel(logging.ERROR)
 
     """
         Chamamos o init das nossas views para que a nossa rotas sejam inicializadas corretamente

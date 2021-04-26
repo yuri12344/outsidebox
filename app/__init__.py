@@ -3,7 +3,7 @@ from os import getenv
 from app.configurations import database, migration
 from app import views
 
-# deploy 2
+# deploy 6
 
 
 def create_app():

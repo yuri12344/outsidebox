@@ -4,7 +4,7 @@ from app.configurations import database, migration
 from app import views
 import sys
 
-# deploy 3
+# deploy 4
 import logging
 
 

@@ -1,4 +1,10 @@
 # Logical structure of routes
+This project is based on a customer and service provider structure.
+  The service provider creates its account, and its services, and can sell them to its customers, previously registered or not, only registered customers can give feedback for the services performed.
+
+After the budget, and release for execution, the service provider sends the customer a link, containing details, values, videos, new budgets, etc.
+
+After the budget, and release for execution, the service provider sends the customer a link, containing details, values, videos, new budgets, etc.
 
 # 01 SIGNUP COMPANY
 url = /signup_company
@@ -92,7 +98,7 @@ expected = {
 # If id_company is not logged in
 
 expected = {
-    
+
     "error": "You cant acces this page"
 }
 # END SERVICES CATALOG

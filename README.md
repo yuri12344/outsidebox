@@ -4,7 +4,6 @@ This project is based on a customer and service provider structure.
 
 After the budget, and release for execution, the service provider sends the customer a link, containing details, values, videos, new budgets, etc.
 
-After the budget, and release for execution, the service provider sends the customer a link, containing details, values, videos, new budgets, etc.
 
 # 01 SIGNUP COMPANY
 url = /signup_company

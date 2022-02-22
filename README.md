@@ -6,7 +6,7 @@ After the budget, and release for execution, the service provider sends the cust
 
 
 # 01 SIGNUP COMPANY
-url = /signup_company
+url = /signup_company/
 Method POST
 
 json_to_register = {

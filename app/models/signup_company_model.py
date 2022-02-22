@@ -14,4 +14,4 @@ class CompanyModel(db.Model):
     state = db.Column(db.String(255), nullable=False)
     cpf_cnpj = db.Column(db.String(255), nullable=False)
     schedule = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(255), nullable=False)

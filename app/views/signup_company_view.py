@@ -1,7 +1,9 @@
 from flask import Blueprint, request, current_app
 import hashlib
 import binascii
+import psycopg2
 import os
+import ipdb
 from flask.json import jsonify
 from app.models.signup_client_model import ClientModel
 
@@ -21,6 +23,7 @@ def signup_comp():
     check_json_data = check_json_data.__dict__
     check_email_client = ClientModel.query.filter_by(
         email=check_json_data['try_register']['email']).first()
+
     if check_email_client:
         return jsonify({"message": "You cant create account with this email, a ready have a client with this email"})
 
@@ -47,5 +50,5 @@ def signup_comp():
             session.add(company)
             session.commit()
             return {"status": "User created"}
-        except:
-            return {"status": "ERROR: Usuário com este e-mail já existe"}, HTTPStatus.UNPROCESSABLE_ENTITY
+        except Exception as e:
+            return {"status": str(e.__dict__["orig"])}

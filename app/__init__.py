@@ -1,9 +1,10 @@
 from flask import Flask
 from os import getenv
+from dotenv import load_dotenv
 from app.configurations import database, migration
 from app import views
-
-# deploy 13
+import ipdb
+load_dotenv()
 
 
 def create_app():
@@ -13,17 +14,15 @@ def create_app():
         {"secret_key": "chavesecreta"}, {"token": "vazio"}, {"user": "precisa fazer o login"}]
 
     # Aqui nós passamos o "SQLALCHEMY_DATABASE_URI" que foi feito lá no .env
-    old_string = getenv('DATABASE_URL')
-
-    new_string = old_string[:8] + "ql" + old_string[8:]
-
-    app.config["SQLALCHEMY_DATABASE_URI"] = new_string
+    app.config["SQLALCHEMY_DATABASE_URI"] = getenv('DATABASE_URL')[:8] + "ql" + getenv('DATABASE_URL')[8:]
+    
     # Aqui nós passamos False para evitar mensagens de avisos no terminal
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
     # Setamos como False para o Flask não organzizar nossas keys por ordem alfabetica
     app.config["JSON_SORT_KEYS"] = False
 
-    app.config['SECRET_KEY'] = "asdasd"
+    app.config['SECRET_KEY'] = getenv('SECRET_KEY')
 
     # Inicializamos as configurações do nosso db e da nossa migration, que agora estão para o uso
     database.init_app(app)

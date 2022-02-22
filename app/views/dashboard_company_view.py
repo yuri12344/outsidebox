@@ -1,4 +1,5 @@
 from flask.globals import current_app
+from app import user_logged
 from app.views.login_view import token_required
 from flask import Blueprint, request, jsonify
 import os
@@ -12,7 +13,7 @@ base_url = os.getenv('BASE_URL')
 @dashboard_company.route('/<id_company>', methods=['GET'])
 @token_required
 def all_companys(id_company=0):
-    user_logged = current_app.secret_key[2]['user']
+    user_logged = user_logged[2]['user']
     try:
         user_logged.get(user_logged['description'])
         id_company_loged = user_logged['id']

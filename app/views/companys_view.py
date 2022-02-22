@@ -3,6 +3,7 @@ from app.models.signup_company_model import CompanyModel
 import os
 base_url = os.getenv('BASE_URL')
 
+
 bp_companys = Blueprint('bp_companys', __name__)
 
 

@@ -1,14 +1,15 @@
-from flask import Blueprint, jsonify, request, make_response, current_app
+from flask import Blueprint, jsonify, request, make_response
 from flask_sqlalchemy import SQLAlchemy
 from app.models.signup_company_model import CompanyModel
 from app.models.signup_client_model import ClientModel
 from functools import wraps
+from app import user_logged
 
 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = current_app.secret_key[1]['token']
+        token = user_logged[1]['token']
         if token == "vazio":
             return jsonify({'message': 'Faça o login'}), 403
         return f(*args, **kwargs)
@@ -33,15 +34,15 @@ def login():
 
     if company:
         if company.password == auth['password']:
-            current_app.secret_key[1]['token'] = "logado"
-            current_app.secret_key[2]['user'] = company.__dict__
+            user_logged[1]['token'] = "logado"
+            user_logged[2]['user'] = company.__dict__
             return jsonify({'message': f'Usuário {company.name} do tipo company logado com sucesso'})
         return jsonify({'message': 'senha errada ou email errado'})
 
     if client:
         if client.password == auth['password']:
-            current_app.secret_key[1]['token'] = "logado"
-            current_app.secret_key[2]['user'] = client.__dict__
+            user_logged[1]['token'] = "logado"
+            user_logged[2]['user'] = client.__dict__
             return jsonify({'message': f'Usuário {client.name} do tipo client logado com sucesso'})
         return jsonify({'message': 'senha errada ou email errado'})
 

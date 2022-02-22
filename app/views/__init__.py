@@ -2,6 +2,9 @@ from flask import Flask
 
 
 def init_app(app: Flask):
+    from app.views.home_view import bp_home
+    app.register_blueprint(bp_home)
+
     # Rota 01 SIGNUP COMPANY
     from app.views.signup_company_view import bp_signup_company
     app.register_blueprint(bp_signup_company)

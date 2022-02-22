@@ -1,9 +1,12 @@
-from app.views.login_view import token_required, current_app
-from flask import Blueprint, request, jsonify
+from app.views.login_view import token_required
+from flask import Blueprint, request, jsonify, current_app
 from app.services.validate_service_request_catalog import ValidateServiceRequestFromCatalog
 from app.models.service_request_catalog_model import ServiceRequestCatalogModel
 from app.models.services_created import ServicesCreated
 import os
+from app import user_logged
+
+
 bp_catalog_service_request = Blueprint(
     'bp_catalog_service_request', __name__, url_prefix='/catalog_service_request/')
 
@@ -14,7 +17,7 @@ def service_request_catalog():
     base_url = os.getenv('BASE_URL')
     session = current_app.db.session
 
-    company_logged = current_app.secret_key[2]['user']
+    company_logged = user_logged[2]['user']
     data = request.json
     validate_data = ValidateServiceRequestFromCatalog(data)
     validate_data = validate_data.__dict__

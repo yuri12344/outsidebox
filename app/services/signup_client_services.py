@@ -19,7 +19,6 @@ class SignupClient():
         json_data = dict(user)
         # Check KEYS
         json_data = self.check_keys(json_data)
-        print(self.can_register)
         if self.can_register == False:
             return json_data
         # Check empty values
@@ -56,8 +55,8 @@ class SignupClient():
                 return {"specific_error": f"A {key} não pode está vazia(o)", "Use this sample JSON": f"{json_signup_client}"}
         self.can_register = True
         return json_data
+        
     # Check e-mail
-
     def check_if_the_email_is_written_correctly(self, json_data):
         regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
         if (re.search(regex, json_data['email'])):
@@ -117,7 +116,6 @@ class SignUp():
         json_data = dict(user)
         # Check KEYS
         json_data = self.check_keys(json_data)
-        print(self.can_register)
         if self.can_register == False:
             return json_data
         # Check empty values

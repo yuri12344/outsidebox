@@ -19,7 +19,7 @@ def token_required(f):
 bp_login = Blueprint('/login', __name__, url_prefix='/login')
 
 
-@bp_login.route('/', methods=['POST'])
+@bp_login.route('', methods=['POST'])
 def login():
     auth = request.get_json()
 

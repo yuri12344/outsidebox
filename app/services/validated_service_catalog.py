@@ -17,7 +17,6 @@ class ValidatedServiceCatalog():
 
         # Check KEYS
         json_data = self.check_keys(json_data)
-        print(self.can_register)
         if self.can_register == False:
             return json_data
 

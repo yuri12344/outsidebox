@@ -1,5 +1,4 @@
 from flask import Blueprint, request,  current_app
-from http import HTTPStatus
 
 from flask.json import jsonify
 from app.models.signup_client_model import ClientModel
@@ -9,7 +8,7 @@ from app.models.signup_company_model import CompanyModel
 bp_client = Blueprint("client_route", __name__)
 
 
-@bp_client.route('/client', methods=["POST"])
+@bp_client.route('/signup_client', methods=["POST"])
 def client():
 
     session = current_app.db.session
@@ -43,5 +42,5 @@ def client():
             session.add(client)
             session.commit()  # Dando commit nas inserções feita na nossa tabela
             return {"sucess": "User created with sucess"}
-        except:
-            return {"status": "Usuario com este e-mail ja existe"}, HTTPStatus.UNPROCESSABLE_ENTITY
+        except Exception as e:
+            return {"status": str(e.__dict__["orig"])}

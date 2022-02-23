@@ -9,20 +9,6 @@ After the budget, and release for execution, the service provider sends the cust
 url = /signup_company/
 Method POST
 
-json_to_register = {
-
-    "name": "",
-    "email": "",
-    "password": "",
-    "phone": "",
-    "address": "",
-    "city": "",
-    "state": "",
-    "cpf/cnpj": "",
-    "schedule": "",
-    "description": "",
-}
-
 data_to_register = {
 
     "name": "Mecanica do Pedro",
@@ -42,17 +28,6 @@ expected_return = {
     "sucess": "User created with sucess, please login in /login"
 }
 
-sample_missing_data = {
-
-    "nam1e": "Pedro's mechanics",  # Name spelled wrong
-    # ...etc
-}
-
-expected_return = {
-
-    "error": "Use this json format {json_to_register}"
-}
-# END SIGNUP COMPANY
 
 # 02 SERVICES CATALOG
 url = /services_catalog/create/<id_company>
@@ -63,14 +38,6 @@ Will receive the company ID in the URL
 
 If id_company is logged in
 
-json_to_create_service_to_catalog = {
-
-    "name": "Your generic service name",
-    "price": 70,
-    "description": "Short description",
-    "id_company": 1  # int company ID given by URL
-}
-
 given_right_data = {
 
     "name": "Nozzle cleaning",
@@ -78,20 +45,10 @@ given_right_data = {
     "description": "Nozzle cleaning",
     "id_company": 1
 }
+
 expected = {
 
     "sucess": "Service created with sucess, id: {id_service}"
-}
-
-given_missing_data = {
-
-    "nam1e": "Nozzle cleaning",  # Name spelled wrong
-    # ...etc
-}
-
-expected = {
-
-    "error": "Use this json format {json_to_create_service_to_catalog}"
 }
 
 # If id_company is not logged in
@@ -105,7 +62,9 @@ expected = {
 
 # 03 SERVICE REQUEST FROM CATALOG
 url = /catalog_service_request/<id_company >
+
 Method POST
+
 If id_company is logged in
 
 json_to_create_service_request_from_catalog = {
@@ -162,7 +121,9 @@ expected = {
 
 # 04 SPECIFIC SERVICE REQUEST
 url = /services_specific/create/<id_company>
+
 If id_company is logged in
+
 Method POST
 
 json_to_create_specific_service_ = {
@@ -223,8 +184,11 @@ expected = {
 
 # 05 GET SERVICES
 url = /get_services/<id_company>/<id_service>
+
 Method GET
+
 /get_services/1/1
+
 If id_service exists in id_company
 
 json_to_get_services = {
@@ -244,6 +208,7 @@ expected = {
 }
 
 If the json is passed in the wrong format
+
 given_missing_data = {
 
     "id_company": 3,  # Company does not exists
@@ -293,6 +258,7 @@ given = {
 }
 
 If the json is passed in the wrong format
+
 given_missing_data = {
 
     "id_company": 3,  # Company does not exists
@@ -306,10 +272,12 @@ expected = {
 }
 
 If id_company is not logged in
+
 expected = {
 
     "error": "You cant acces this page"
 }
+
 # END UPDATE SERVICE
 
 
@@ -363,7 +331,9 @@ expected = {
 
 
 # 08 company_dashboard
+
 Method GET
+
 url = /company_dashboard/<id_company>/
 
 If id_company is logged in
@@ -379,9 +349,12 @@ expected = {
 }
 
 # Se id_company não está logado
+
 expected = {
+    
     "error": "You cant acces this page"
 }
+
 # END company_dashboard
 
 
@@ -391,6 +364,7 @@ Method GET
 url = /companys/ or url = /companys/<id_company>
 
 Caso id_company não seja informado
+
 expected = {
 
     "companys_list": {
@@ -419,11 +393,13 @@ expected = {
 }
 
 If the id does not exist, return an error
+
 # END  COMPANYS
 
 
 # 10 SIGNUP CLIENT
 url = /signup_client
+
 Method POST
 
 sample_json_to_register = {
@@ -472,7 +448,9 @@ expected_return = {
 
 
 # 11 LOGIN
+
 url = /login
+
 Method POST
 
 given = {

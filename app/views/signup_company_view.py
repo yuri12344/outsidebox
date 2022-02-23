@@ -15,12 +15,14 @@ bp_signup_company = Blueprint(
     'bp_signup_company', __name__, url_prefix='/signup_company')
 
 
-@bp_signup_company.route('/', methods=['POST', 'GET'])
+@bp_signup_company.route('', methods=['POST', 'GET'])
 def signup_comp():
     data = request.get_json()
     session = current_app.db.session
     check_json_data = SignUp(data)
+    
     check_json_data = check_json_data.__dict__
+
     check_email_client = ClientModel.query.filter_by(
         email=check_json_data['try_register']['email']).first()
 
